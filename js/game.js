@@ -42,6 +42,8 @@
   function update() {
     handlePlayerMovement();
     handleBulletAnimations();
+    cleanup();
+
   }
 
   function handlePlayerMovement() {
@@ -73,6 +75,8 @@
     }
   };
 
+  //handler function
+
   function handlePlayerFire() {
   	 playerBullets.add( game.add.sprite(player.x, player.y, GFX, 7) );
   	console.log("fire");
@@ -81,6 +85,21 @@
   function handleBulletAnimations() {
   playerBullets.children.forEach( bullet => bullet.y -= PLAYER_BULLET_SPEED );
 };
+
+//Utility function
+
+function cleanup() {
+    playerBullets.children
+      .filter( bullet => bullet.y < -14 )
+      .forEach( bullet => bullet.destroy() );
+  };
+
+  function update() {
+    handlePlayerMovement();
+    handleBulletAnimations();
+
+    cleanup();
+  };
 
 })(window.Phaser);
 
