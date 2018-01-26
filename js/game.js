@@ -73,8 +73,9 @@
   };
 
   function handlePlayerFire() {
-  console.log("fire");
-};
+  	 playerBullets.add( game.add.sprite(player.x, player.y, GFX, 7) );
+  	console.log("fire");
+  };
 
 })(window.Phaser);
 
