@@ -7,6 +7,7 @@
   const GAME_CONTAINER_ID = 'game';
   const GFX = 'gfx';
   const INITIAL_MOVESPEED = 4;
+  const SQRT_TWO = Math.sqrt(2);
 
 
 
@@ -37,6 +38,16 @@
   }
 
   function handlePlayerMovement() {
+    let movingH = Math.sqrt(2);
+  	let movingV = Math.sqrt(2);
+  	
+  	if( cursors.up.isDown || cursors.down.isDown){
+    movingH = 1; // slow down diagonal movement
+  	}
+  	if( cursors.left.isDown || cursors.right.isDown){
+    movingV = 1; // slow down diagonal movement
+    }
+    
     switch( true ){
       case cursors.left.isDown:
         player.x -= player.moveSpeed;
