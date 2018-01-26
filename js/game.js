@@ -51,7 +51,7 @@
     randomlySpawnEnemy()
 	handleEnemyActions()
 	handleCollisions()
-	
+
     cleanup();
 
 
@@ -88,6 +88,10 @@
 
   //handler function
 
+function handlePlayerHit() {
+    gameOver();
+  };
+  
   function handlePlayerFire() {
   	 playerBullets.add( game.add.sprite(player.x, player.y, GFX, 7) );
   	// console.log("fire");
@@ -123,14 +127,25 @@ function removeBullet(bullet) {
       .filter( enemy => 
         playerBullets.children.some( 
           bullet => enemy.overlap(bullet) 
-        ) 
+        )
+
       );
+
 
     if( enemiesHit.length ){
       // clean up bullets that land
       playerBullets.children
         .filter( bullet => bullet.overlap(enemies) )
         .forEach( removeBullet );
+
+      enemiesHit.forEach( destroyEnemy );
+    }
+     // check if enemies hit the player
+    enemiesHit = enemies.children
+      .filter( enemy => enemy.overlap(player) );
+
+    if( enemiesHit.length){
+      handlePlayerHit();
 
       enemiesHit.forEach( destroyEnemy );
     }
@@ -144,7 +159,11 @@ function cleanup() {
       .forEach( bullet => bullet.destroy() );
   };
 
-  
+
+function gameOver() {
+    game.state.destroy();
+    game.add.text(90, 200, 'YOUR HEAD ASPLODE', { fill: '#FFFFFF' });
+  };    
 
 })(window.Phaser);
 
