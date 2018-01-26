@@ -17,7 +17,7 @@
 
   let player;
   let cursors;
-
+  let playerBullets;
 
 
   // Core game methods
@@ -28,8 +28,14 @@
 
   function create() {
   	cursors = game.input.keyboard.createCursorKeys();
+  	cursors.fire = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+  	cursors.fire.onUp.add( handlePlayerFire );
+  	
   	player = game.add.sprite(100,100, GFX, 8);
   	player.moveSpeed = INITIAL_MOVESPEED;
+  	playerBullets = game.add.group();
+
+
   };
 
 
@@ -66,4 +72,11 @@
     }
   };
 
+  function handlePlayerFire() {
+  console.log("fire");
+};
+
 })(window.Phaser);
+
+
+
