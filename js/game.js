@@ -28,7 +28,7 @@
   function preload() {
   	game.load.spritesheet(GFX, '../assets/shmup-spritesheet-140x56-28x28-tile.png', 28, 28);
 
-  };
+  }
 
   function create() {
   	cursors = game.input.keyboard.createCursorKeys();
@@ -42,15 +42,15 @@
 
 
 
-  };
+  }
 
 
   function update() {
     handlePlayerMovement();
     handleBulletAnimations();
-    randomlySpawnEnemy()
-	handleEnemyActions()
-	handleCollisions()
+    randomlySpawnEnemy();
+  	handleEnemyActions();
+    handleCollisions();
 
     cleanup();
 
@@ -70,47 +70,47 @@
     
     switch( true ){
       case cursors.left.isDown:
-        player.x -= player.moveSpeed;
+        player.x -= player.moveSpeed * movingH;
         break;
       case cursors.right.isDown:
-        player.x += player.moveSpeed;
+        player.x += player.moveSpeed * movingH;
         break;
     }
     switch( true ){
       case cursors.down.isDown:
-        player.y += player.moveSpeed;
+        player.y += player.moveSpeed * movingV;
         break;
       case cursors.up.isDown:
-        player.y -= player.moveSpeed;
+        player.y -= player.moveSpeed * movingV;
         break;
     }
-  };
+  }
 
   //handler function
 
 function handlePlayerHit() {
     gameOver();
-  };
+  }
   
   function handlePlayerFire() {
   	 playerBullets.add( game.add.sprite(player.x, player.y, GFX, 7) );
   	// console.log("fire");
-  };
+  }
 
   function handleBulletAnimations() {
   playerBullets.children.forEach( bullet => bullet.y -= PLAYER_BULLET_SPEED );
-};
+}
 
   function randomlySpawnEnemy() {
     if(randomGenerator.between(0, ENEMY_SPAWN_FREQ) === 0) {
       let randomX = randomGenerator.between(0, GAME_WIDTH);
       enemies.add( game.add.sprite(randomX, -24, GFX, 0));
     }
-  };
+  }
 
   function handleEnemyActions() {
     enemies.children.forEach( enemy => enemy.y += ENEMY_SPEED );
-  };
+  }
 
 function removeBullet(bullet) {
     bullet.destroy();
@@ -149,7 +149,7 @@ function removeBullet(bullet) {
 
       enemiesHit.forEach( destroyEnemy );
     }
-  };
+  }
 
 //Utility function
 
@@ -157,13 +157,13 @@ function cleanup() {
     playerBullets.children
       .filter( bullet => bullet.y < -14 )
       .forEach( bullet => bullet.destroy() );
-  };
+  }
 
 
 function gameOver() {
     game.state.destroy();
     game.add.text(90, 200, 'YOUR HEAD ASPLODE', { fill: '#FFFFFF' });
-  };    
+  }    
 
 })(window.Phaser);
 
